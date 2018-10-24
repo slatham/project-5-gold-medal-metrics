@@ -43,7 +43,7 @@ Returns a SQL query string that will find the number of gold medals for the give
 const goldMedalNumber = country => {
     
 
-    return `SELECT count(*) from GoldMedal where country = '${country}'` 
+    return `SELECT count(*) from GoldMedal where country = '${country}';` 
 };
 
 /*
@@ -52,7 +52,13 @@ won the most summer medals, along with the number of medals aliased to 'count'.
 */
 
 const mostSummerWins = country => {
-  return;
+
+  return `select year, count(*) as count from GoldMedal where season = 'Summer' \
+                                                      and country = '${country}'\ 
+                                                      group by year \
+                                                      order by count desc limit 1;`
+
+  
 };
 
 /*
@@ -61,7 +67,11 @@ won the most winter medals, along with the number of medals aliased to 'count'.
 */
 
 const mostWinterWins = country => {
-  return;
+
+    return `select year, count(*) as count from GoldMedal where season = 'Winter' \
+                                                      and country = '${country}'\ 
+                                                      group by year \
+                                                      order by count desc limit 1;`
 };
 
 /*
@@ -70,7 +80,9 @@ won the most medals, along with the number of medals aliased to 'count'.
 */
 
 const bestYear = country => {
-  return;
+      return `select year, count(*) as count from GoldMedal where country = '${country}'\ 
+                                                      group by year \
+                                                      order by count desc limit 1;`
 };
 
 /*
@@ -79,7 +91,10 @@ won the most medals, along with the number of medals aliased to 'count'.
 */
 
 const bestDiscipline = country => {
-  return;
+    return `select discipline, count(country) as count from GoldMedal where country = '${country}' \
+                                                    group by discipline \
+                                                    order by count desc \
+                                                    limit 1;`
 };
 
 /*
@@ -88,7 +103,10 @@ won the most medals, along with the number of medals aliased to 'count'.
 */
 
 const bestSport = country => {
-  return;
+      return `select sport, count(country) as count from GoldMedal where country = '${country}' \
+                                                    group by sport \
+                                                    order by count desc \
+                                                    limit 1;`
 };
 
 /*
@@ -97,7 +115,10 @@ won the most medals, along with the number of medals aliased to 'count'.
 */
 
 const bestEvent = country => {
-  return;
+      return `select event, count(country) as count from GoldMedal where country = '${country}' \
+                                                    group by event \
+                                                    order by count desc \
+                                                    limit 1;`
 };
 
 /*
