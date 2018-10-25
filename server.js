@@ -7,6 +7,10 @@ const {createCountryTable, createGoldMedalTable, goldMedalNumber, bestYear, most
 
 const db = new sqlite3.Database('./gold_medals.sqlite');
 
+db.run('pragma journal_mode=off');
+db.run('pragma temp_store = 2');
+db.run('pragma SYNCHRONOUS = off');
+
 const app = express();
 app.use(cors());
 

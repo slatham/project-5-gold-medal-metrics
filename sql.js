@@ -1,5 +1,8 @@
 var sqlite3 = require('sqlite3');
 var db = new sqlite3.Database('./gold_medals.sqlite');
+db.run('pragma journal_mode=off');
+db.run('pragma temp_store = 2');
+db.run('pragma SYNCHRONOUS = off');
 
 /*
 Returns a SQL query string that will create the Country table with four columns: name (required), code (required), gdp, and population.
