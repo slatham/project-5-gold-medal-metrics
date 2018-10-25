@@ -126,7 +126,7 @@ Returns a SQL query string that will find the number of male medalists.
 */
 
 const numberMenMedalists = country => {
-  return;
+  return `select count (distinct name) as count from GoldMedal where gender = 'Men' and country = '${country}';`;
 };
 
 /*
@@ -134,7 +134,7 @@ Returns a SQL query string that will find the number of female medalists.
 */
 
 const numberWomenMedalists = country => {
-  return;
+  return `select count (distinct name) as count from GoldMedal where gender = 'Women' and country = '${country}';`;
 };
 
 /*
@@ -142,7 +142,7 @@ Returns a SQL query string that will find the athlete with the most medals.
 */
 
 const mostMedaledAthlete = country => {
-  return;
+  return `select name, count(*) as count from GoldMedal where country = '${country}' group by name order by count desc limit 1;`
 };
 
 /*
@@ -151,7 +151,23 @@ optionally ordered by the given field in the specified direction.
 */
 
 const orderedMedals = (country, field, sortAscending) => {
-  return;
+ 
+
+ let sql = `select * from GoldMedal where country = '${country}'`
+
+ if (field) {
+
+    sql = sql + ` order by ${field}`
+    if (sortAscending) {
+      sql = sql + ' asc'
+    } else {
+      sql = sql + ' desc'
+    }
+ }
+
+
+ return sql;
+
 };
 
 /*
@@ -162,7 +178,24 @@ aliased as 'percent'. Optionally ordered by the given field in the specified dir
 */
 
 const orderedSports = (country, field, sortAscending) => {
-  return;
+//debugger
+  let sql = `select sport, count(sport) as count,
+      round(count(sport) * 100 / (select count(*) from GoldMedal where country = '${country}') )as percent
+      from GoldMedal where country = '${country}' group by sport`;
+
+  if (field) {
+
+    sql = sql + ` order by ${field}`
+    if (sortAscending) {
+      sql = sql + ' asc'
+    } else {
+      sql = sql + ' desc'
+    }
+    }
+
+    return sql;
+
+  
 };
 
 module.exports = {
